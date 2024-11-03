@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* src/index.css */
+/* Ensure body does not allow overflow */
+/* Ensure that the dropdown is positioned correctly */
+select {
+    position: relative; /* Keep position relative to allow adjustments */
+    max-width: 100%; /* Prevent the dropdown from exceeding the width of its container */
+  }
+  
+  /* Adjust the body overflow to avoid horizontal scroll */
+  body {
+    overflow-x: hidden; /* Prevent horizontal overflow */
+  }
+
+  
+  
