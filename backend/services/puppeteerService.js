@@ -13,6 +13,7 @@ const getRandomJobType = () => {
 const scrapeIndeedJobs = async () => {
     const url = 'https://in.indeed.com/jobs?q=software+jobs&l=&from=searchOnDesktopSerp&vjk=713b4c2dff769d66';
     const browser = await puppeteer.launch({ headless: false });
+    
     const page = await browser.newPage();
 
     const randomUserAgent = USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)];
