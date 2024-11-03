@@ -4,7 +4,7 @@ const { scrapeIndeedJobs, scrapeGlassdoorJobs } = require('../services/puppeteer
 
 let jobListings = [];
 
-router.get('/jobs', async (req, res) => {
+router.get('/', async (req, res) => {
     const { jobType, location } = req.query;
 
     if (jobListings.length === 0) {
