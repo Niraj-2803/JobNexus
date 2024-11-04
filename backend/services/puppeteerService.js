@@ -15,7 +15,7 @@ const scrapeIndeedJobs = async () => {
     const browser = await puppeteer.launch({ 
         headless: true,
         executablePath: puppeteer.executablePath(),
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--single-process', '--no-zygote'],
     });
     
     const page = await browser.newPage();
@@ -69,7 +69,7 @@ const scrapeGlassdoorJobs = async () => {
     const browser = await puppeteer.launch({ 
         headless: true,
         executablePath: puppeteer.executablePath(),
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--single-process', '--no-zygote'],
     });
     const page = await browser.newPage();
 
