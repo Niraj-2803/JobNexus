@@ -14,7 +14,8 @@ const scrapeIndeedJobs = async () => {
     const url = 'https://in.indeed.com/jobs?q=software+jobs&l=&from=searchOnDesktopSerp&vjk=713b4c2dff769d66';
     const browser = await puppeteer.launch({ 
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        executablePath: puppeteer.executablePath(),
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     
     const page = await browser.newPage();
@@ -67,7 +68,8 @@ const scrapeGlassdoorJobs = async () => {
     const url = 'https://www.glassdoor.co.in/Job/software-jobs-SRCH_KO0,8.htm';
     const browser = await puppeteer.launch({ 
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        executablePath: puppeteer.executablePath(),
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
 
