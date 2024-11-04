@@ -12,7 +12,16 @@ const getRandomJobType = () => {
 
 const scrapeIndeedJobs = async () => {
     const url = 'https://in.indeed.com/jobs?q=software+jobs&l=&from=searchOnDesktopSerp&vjk=713b4c2dff769d66';
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ 
+        headless: true, // Set to true for hosting
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--window-size=1920,1080',
+        ], 
+    });
     
     const page = await browser.newPage();
 
@@ -62,7 +71,16 @@ const scrapeIndeedJobs = async () => {
 
 const scrapeGlassdoorJobs = async () => {
     const url = 'https://www.glassdoor.co.in/Job/software-jobs-SRCH_KO0,8.htm';
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ 
+        headless: true, // Set to true for hosting
+        args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--window-size=1920,1080',
+        ], 
+    });
     const page = await browser.newPage();
 
     const randomUserAgent = USER_AGENTS[Math.floor(Math.random() * USER_AGENTS.length)];

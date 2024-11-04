@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 const jobRoutes = require('./api/jobController');
 
 const app = express();
