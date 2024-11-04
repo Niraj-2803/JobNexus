@@ -1,18 +1,21 @@
-# Start from Puppeteer's official image
-FROM ghcr.io/puppeteer/puppeteer:16.1.0
+# Use the latest LTS version of Node.js
+FROM node:18
 
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json and install dependencies
+# Copy package.json and package-lock.json first for better caching
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
 # Copy the rest of your application files
 COPY . .
 
-# Expose the application port
+# Expose the desired port (adjust if your app runs on a different port)
 EXPOSE 5000
 
-# Start the application
+# Command to run your app
 CMD ["npm", "start"]
+
