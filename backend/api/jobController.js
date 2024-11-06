@@ -1,29 +1,53 @@
 const express = require('express');
 const router = express.Router();
-const { scrapeIndeedJobs, scrapeGlassdoorJobs } = require('../services/puppeteerService');
+//const { scrapeIndeedJobs, scrapeGlassdoorJobs } = require('../services/puppeteerService');
+const Job = require('../models/Jobs')
 
-let jobListings = [];
-
+// Endpoint to get job listings
 router.get('/', async (req, res) => {
     const { jobType, location } = req.query;
 
-    if (jobListings.length === 0) {
-        const indeedJobs = await scrapeIndeedJobs();
-        const glassdoorJobs = await scrapeGlassdoorJobs();
-        jobListings = [...indeedJobs, ...glassdoorJobs];
-    }
+    let jobListings;
 
-    let filteredJobs = jobListings;
+    // Fetch data from MongoDB if available
+    jobListings = await Job.find();
 
+    // Filter data if query params are provided
     if (jobType) {
-        filteredJobs = filteredJobs.filter(job => job.jobType.toLowerCase() === jobType.toLowerCase());
+        jobListings = jobListings.filter(job => job.jobType.toLowerCase() === jobType.toLowerCase());
     }
 
     if (location) {
-        filteredJobs = filteredJobs.filter(job => job.location.toLowerCase().includes(location.toLowerCase()));
+        jobListings = jobListings.filter(job => job.location.toLowerCase().includes(location.toLowerCase()));
     }
 
-    return res.json(filteredJobs);
+    return res.json(jobListings);
 });
+
+/*
+// Endpoint to scrape jobs and store in MongoDB
+router.get('/scrape', async (req, res) => {
+    try {
+        // Scrape jobs
+        const indeedJobs = await scrapeIndeedJobs();
+        const glassdoorJobs = await scrapeGlassdoorJobs();
+
+        // Add source for differentiation
+        indeedJobs.forEach(job => job.source = 'Indeed');
+        glassdoorJobs.forEach(job => job.source = 'Glassdoor');
+
+        // Combine job listings and store in MongoDB
+        const allJobs = [...indeedJobs, ...glassdoorJobs];
+
+        // Insert jobs into MongoDB
+        await Job.insertMany(allJobs);
+
+        res.status(201).json({ message: 'Scraped and saved jobs to database', jobs: allJobs });
+    } catch (error) {
+        console.error('Error scraping or saving jobs:', error);
+        res.status(500).json({ error: 'Failed to scrape jobs' });
+    }
+});
+*/
 
 module.exports = router;
