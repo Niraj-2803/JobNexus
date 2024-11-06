@@ -3,16 +3,17 @@ const router = express.Router();
 //const { scrapeIndeedJobs, scrapeGlassdoorJobs } = require('../services/puppeteerService');
 const Job = require('../models/Jobs')
 
+//JUST FOR HOSTING I ADDED MONGODB. THE JOBS ARE SCRAPED ON LOCAL HOST STORE IN DB AND THEN DISPLAYED ON FRONTEND.
+//BECAUSE THE SCRAPING WAS BLOCKED WHEN HOSTED.
+
 // Endpoint to get job listings
 router.get('/', async (req, res) => {
     const { jobType, location } = req.query;
 
     let jobListings;
 
-    // Fetch data from MongoDB if available
     jobListings = await Job.find();
 
-    // Filter data if query params are provided
     if (jobType) {
         jobListings = jobListings.filter(job => job.jobType.toLowerCase() === jobType.toLowerCase());
     }
